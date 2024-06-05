@@ -2,11 +2,13 @@ import React, { useContext, useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Authcontext } from "../../../Providers/AuthProviders";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import parcelImg from '../../../assets/Parcel/parcel.png'
+import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 
 function ParcelBooking() {
     const { user } = useContext(Authcontext);
-   
+    const axiosPublic = useAxiosPublic();
   const {
     register,
     handleSubmit,
@@ -38,11 +40,20 @@ function ParcelBooking() {
       price,
     };
 
-    axios
+    axiosPublic
       .post("/user/bookings", bookingData)
       .then((response) => {
         console.log("Booking submitted: ", response.data);
-        reset();
+          reset();
+          if (response.data.insertedId) {
+               Swal.fire({
+                 position: "top-end",
+                 icon: "success",
+                 title: "Bookings success",
+                 showConfirmButton: false,
+                 timer: 1500,
+               });
+          }
       })
       .catch((error) => {
         console.error("There was an error submitting the booking!", error);
@@ -54,8 +65,9 @@ function ParcelBooking() {
       <Helmet>
         <title>DelivTract | Bookings</title>
       </Helmet>
-
-      <div className="hero min-h-screen bg-base-200">
+          <div className=" flex justify-center mt-2 mx-auto"><img className=" w-56" src={parcelImg} alt="" /></div>
+          {/* <div className="divider"></div> */}
+      <div className="hero min-h-screen bg-base-200 ">
         <div className="hero-content">
           <div className="card w-full shadow-2xl bg-base-100">
             <form
@@ -126,12 +138,9 @@ function ParcelBooking() {
                     type="number"
                     placeholder="Parcel Weight"
                     className="input input-bordered"
-               
                     {...register("parcelWeight", { required: true, min: 1 })}
                   />
-                  {errors.parcelWeight && (
-                    <span> must be greater than 0</span>
-                  )}
+                  {errors.parcelWeight && <span> must be greater than 0</span>}
                 </div>
                 <div className="form-control">
                   <label className="label">
@@ -187,9 +196,9 @@ function ParcelBooking() {
                     type="date"
                     placeholder="Requested Delivery Date"
                     className="input input-bordered"
-                    {...register("deliveryDate", { required: true })}
+                    {...register("deliveryDate")}
                   />
-                  {errors.deliveryDate && <span>This field is required</span>}
+                 
                 </div>
                 <div className="form-control">
                   <label className="label">
@@ -199,7 +208,7 @@ function ParcelBooking() {
                   </label>
                   <input
                     type="text"
-                    placeholder="Delivery Address Latitude"
+                    placeholder="i.e 21.121365496"
                     className="input input-bordered"
                     {...register("deliveryLatitude", { required: true })}
                   />
@@ -218,7 +227,7 @@ function ParcelBooking() {
                   </label>
                   <input
                     type="text"
-                    placeholder="Delivery Address Longitude"
+                    placeholder="i.e 21.121365496"
                     className="input input-bordered"
                     {...register("deliveryLongitude", { required: true })}
                   />

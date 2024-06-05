@@ -12,6 +12,7 @@ function SignUp() {
   const { createUser } = useContext(Authcontext);
   const { googleSignIn } = useContext(Authcontext);
   const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
   const {
     register,
     handleSubmit,
@@ -21,13 +22,22 @@ function SignUp() {
   } = useForm();
 
   const handleGoogleLogin = () => {
+ 
     googleSignIn()
       .then(result => {
+           const userInfo = {
+             email: result?.user?.email,
+             name:result?.user?.displayName
+        };
+        axiosPublic.post('/users', userInfo)
+          .then(res => {
+          
+        })
         navigate('/');
       console.log(result)
     })
   }
-  const axiosPublic = useAxiosPublic();
+  
 
   const onSubmit = (data) => {
     const userInfo = {

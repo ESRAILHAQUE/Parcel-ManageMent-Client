@@ -6,6 +6,7 @@ import SignUp from "../Pages/Login/SignUp";
 import Dashboard from "../Layout/Dashboard";
 import ParcelBooking from "../Pages/Dashboard/ParcelBooking/ParcelBooking";
 import PrivateRoutes from './PrivateRoutes/PrivateRoutes';
+import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -26,12 +27,21 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: "dashboard",
-    element: <Dashboard></Dashboard>,
+    path: "/dashboard",
+    element: (
+      <PrivateRoutes>
+        <Dashboard></Dashboard>
+      </PrivateRoutes>
+    ),
     children: [
       {
-        path: "/dashboard/parcelBooking",
+        path: "parcelBooking",
         element: <ParcelBooking></ParcelBooking>,
+      },
+      // Admin Routes
+      {
+        path: "allUsers",
+        element: <AllUsers></AllUsers>
       },
     ],
   },
