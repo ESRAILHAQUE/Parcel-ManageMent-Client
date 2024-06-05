@@ -11,7 +11,7 @@ function Dashboard() {
             <NavLink>My Profile</NavLink>
           </li>
           <li>
-            <NavLink>Book a Parcel</NavLink>
+            <NavLink to={'/dashboard/parcelBooking'}>Book a Parcel</NavLink>
           </li>
           <li>
             <NavLink> My Parcels</NavLink>

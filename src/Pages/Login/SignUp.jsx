@@ -2,18 +2,21 @@ import { useForm } from "react-hook-form";
 import loginImg from '../../assets/Login/signup.png'
 import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { Authcontext } from './../../Providers/AuthProviders';
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 function SignUp() {
   const { createUser } = useContext(Authcontext);
   const { googleSignIn } = useContext(Authcontext);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -23,17 +26,29 @@ function SignUp() {
       console.log(result)
     })
   }
+  const axiosPublic = useAxiosPublic();
 
   const onSubmit = (data) => {
+    const userInfo = {
+      name: data.name,
+      email:data.email
+    }
     createUser(data.email, data.password)
       .then(() => {
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Successfully registered.",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        axiosPublic.post('/users', userInfo)
+          .then(res => {
+            if (res.data.insertedId) {
+              reset();
+              navigate('/');
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Successfully registered.",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+        })
       })
       .catch((err) => {
        

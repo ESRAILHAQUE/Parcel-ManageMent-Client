@@ -62,7 +62,7 @@ const onSubmit = (data) => {
   return (
     <>
       <Helmet>
-        <title>DelivTract | SignUp</title>
+        <title>DelivTract | Login</title>
       </Helmet>
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row-reverse">
@@ -129,9 +129,9 @@ const onSubmit = (data) => {
                 <Link to={"/signup"}>
                   <span className="text-purple-500">Register</span>
                 </Link>
-                <div className="divider">OR</div>
+                {/* <div className="divider">OR</div> */}
               </p>
-              <p>Sign Up with</p>
+              {/* <p>Sign Up with</p>
               <p className="flex gap-3 justify-center">
                 <span className="flex items-center gap-2 p-2 border-2 rounded-lg hover:drop-shadow-xl">
                   <FcGoogle className="text-2xl" />
@@ -140,7 +140,7 @@ const onSubmit = (data) => {
                 <span className="flex items-center gap-2 p-2 border-2  rounded-lg">
                   <FaFacebook className="text-2xl"></FaFacebook>Facebook
                 </span>
-              </p>
+              </p> */}
             </div>
           </div>
         </div>
