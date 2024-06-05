@@ -23,6 +23,7 @@ function SignUp() {
   const handleGoogleLogin = () => {
     googleSignIn()
       .then(result => {
+        navigate('/');
       console.log(result)
     })
   }

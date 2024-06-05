@@ -4,8 +4,8 @@ import { NavLink, Outlet } from "react-router-dom"
 function Dashboard() {
   return (
     <div className="flex">
-      <div className="bg-orange-300 min-h-screen">
-        <p>My Cart</p>
+      <div className="bg-orange-300 px-6 min-h-screen">
+      
         <ul className=" text-blue-800 p-4 space-y-2">
           <li>
             <NavLink>My Profile</NavLink>
@@ -25,7 +25,7 @@ function Dashboard() {
         </ul>
       </div>
       <div className="flex-1">
-        <p>My cart item</p>
+       
         <Outlet></Outlet>
       </div>
     </div>

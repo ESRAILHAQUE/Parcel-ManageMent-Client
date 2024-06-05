@@ -13,7 +13,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthProviders>
       <HelmetProvider>
-        <div className='border-red-800 '>
+        <div>
           
           <RouterProvider router={router} />
         </div>
