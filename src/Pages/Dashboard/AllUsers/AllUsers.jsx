@@ -4,17 +4,18 @@ import TabularUser from "./TabularUser";
 
 function AllUsers() {
   const axiosSecure = useAxiosSecure();
-  const { data: users=[]} = useQuery({
+  const { data: users=[],refetch} = useQuery({
     queryKey:[ 'users'],
     queryFn: async () => {
       const res = await axiosSecure.get('/allUsers')
       return res.data
+    
     }
   })
   return (
     <div>
       <div className="overflow-x-auto">
-        <table className="table table-zebra">
+        <table className="table ">
           {/* head */}
           <thead>
             <tr>
@@ -22,16 +23,13 @@ function AllUsers() {
               <th>Name</th>
               <th>Phone Number</th>
               <th>Number of parcel Booked</th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
+             
             </tr>
           </thead>
           <tbody>
             {/* rows */}
             {users.map((user, index) => (
-              <TabularUser key={user._id} user={user} index={index + 1} />
+              <TabularUser key={user._id}  user={user} index={index + 1} refetch={refetch} />
             ))}
           </tbody>
         </table>
