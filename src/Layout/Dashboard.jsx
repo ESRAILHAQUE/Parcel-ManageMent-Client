@@ -16,7 +16,7 @@ function Dashboard() {
                 <NavLink to={"allUsers"}>All Users</NavLink>
               </li>
               <li>
-                <NavLink> All Delivery Men</NavLink>
+                <NavLink to={"allDelivery"}> All Delivery Men</NavLink>
               </li>
               <li>
                 <NavLink>Statistics</NavLink>

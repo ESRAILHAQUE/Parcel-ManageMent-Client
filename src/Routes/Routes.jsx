@@ -7,6 +7,7 @@ import Dashboard from "../Layout/Dashboard";
 import ParcelBooking from "../Pages/Dashboard/ParcelBooking/ParcelBooking";
 import PrivateRoutes from './PrivateRoutes/PrivateRoutes';
 import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
+import AllDeliveryMan from "../Pages/Dashboard/AllDeliveryMan/AllDeliveryMan";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -41,7 +42,11 @@ export const router = createBrowserRouter([
       // Admin Routes
       {
         path: "allUsers",
-        element: <AllUsers></AllUsers>
+        element: <AllUsers></AllUsers>,
+      },
+      {
+        path: "allDelivery",
+        element: <AllDeliveryMan></AllDeliveryMan>,
       },
     ],
   },
