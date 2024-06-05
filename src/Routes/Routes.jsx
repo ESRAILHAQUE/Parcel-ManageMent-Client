@@ -8,6 +8,8 @@ import ParcelBooking from "../Pages/Dashboard/ParcelBooking/ParcelBooking";
 import PrivateRoutes from './PrivateRoutes/PrivateRoutes';
 import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
 import AllDeliveryMan from "../Pages/Dashboard/AllDeliveryMan/AllDeliveryMan";
+import AllParcel from "../Pages/Dashboard/AllParcel/AllParcel";
+import Statastics from "../Pages/Dashboard/Statastics/Statastics";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -36,6 +38,10 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
+        path: '/dashboard',
+        element:<Statastics></Statastics>
+    },
+      {
         path: "parcelBooking",
         element: <ParcelBooking></ParcelBooking>,
       },
@@ -48,6 +54,10 @@ export const router = createBrowserRouter([
         path: "allDelivery",
         element: <AllDeliveryMan></AllDeliveryMan>,
       },
+      {
+        path: "parcels",
+        element:<AllParcel></AllParcel>
+      }
     ],
   },
 ]);

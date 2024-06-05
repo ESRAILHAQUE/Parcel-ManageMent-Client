@@ -37,6 +37,7 @@ function ParcelBooking() {
       ...data,
       name: user.displayName,
       email: user.email,
+      bookingDate:new Date(),
       price,
     };
 

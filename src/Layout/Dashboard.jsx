@@ -10,7 +10,7 @@ function Dashboard() {
           {isAdmin ? (
             <>
               <li>
-                <NavLink>All Parcels</NavLink>
+                <NavLink to={"parcels"}>All Parcels</NavLink>
               </li>
               <li>
                 <NavLink to={"allUsers"}>All Users</NavLink>

@@ -4,13 +4,9 @@ function DeliveryTabular({index,delivery,refetch}) {
       <th>{index}</th>
       <td>{delivery.name}</td>
       <td>Phone Number</td>
-      <td>
-        
-      </td>
+      <td>Number of parcel delivered</td>
 
-      <td>
-        
-      </td>
+      <td>Average review</td>
     </tr>
   );
 }

@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query"
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
-import DeliveryTabular from "./DeliveryTabular";
-function AllDeliveryMan() {
+import ParcelTabular from "./ParcelTabular";
+
+function AllParcel() {
   const axiosSecure = useAxiosSecure();
-  const { data: delivery=[],refetch} = useQuery({
-    queryKey:[ 'delivery'],
+  const { data: parcel=[],refetch} = useQuery({
+    queryKey:[ 'parcel'],
     queryFn: async () => {
-        const res = await axiosSecure.get("/user/role?role=Delivery");
+        const res = await axiosSecure.get("/parcels");
            console.log(res.data);
       return res.data
     
@@ -15,8 +16,8 @@ function AllDeliveryMan() {
     
   return (
     <div>
-          <h2 className="text-center mt-2">Total Delivery Man: {delivery.length}</h2>
-          <div className="divider"></div>
+      <h2 className="text-center mt-2">Total Parcel: {parcel.length}</h2>
+      <div className="divider"></div>
       <div className="overflow-x-auto">
         <table className="table ">
           {/* head */}
@@ -25,16 +26,19 @@ function AllDeliveryMan() {
               <th>#</th>
               <th>Name</th>
               <th>Phone Number</th>
-              <th>Number of parcel delivered</th>
-              <th>Average review</th>
+              <th>Booking Date</th>
+              <th>Requested Delivery Date</th>
+              <th>Cost</th>
+              <th>Status</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {/* rows */}
-            {delivery.map((delivery, index) => (
-              <DeliveryTabular
-                key={delivery._id}
-                delivery={delivery}
+            {parcel.map((parcel, index) => (
+              <ParcelTabular
+                key={parcel._id}
+                parcel={parcel}
                 index={index + 1}
                 refetch={refetch}
               />
@@ -45,4 +49,4 @@ function AllDeliveryMan() {
     </div>
   );
 }
-export default AllDeliveryMan
+export default AllParcel
