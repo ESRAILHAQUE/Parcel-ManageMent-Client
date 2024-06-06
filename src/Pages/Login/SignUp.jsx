@@ -90,12 +90,12 @@ function SignUp() {
       <Helmet>
         <title>DelivTract | SignUp</title>
       </Helmet>
-      <div className="hero min-h-screen bg-base-200">
+      <div className="hero min-h-screen bg-base-100 my-4 ">
         <div className="hero-content flex-col gap-20 lg:flex-row-reverse">
           <div className="text-center lg:text-left animate__animated animate__lightSpeedInRight">
             <img src={loginImg} alt="" className="w-[90%]" />
           </div>
-          <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100 animate__animated animate__lightSpeedInLeft">
+          <div className="card shrink-0  w-full max-w-sm shadow-2xl bg-base-100 animate__animated animate__lightSpeedInLeft">
             <form className="card-body" onSubmit={handleSubmit(onSubmit)}>
               <div className="form-control">
                 <label className="label">
