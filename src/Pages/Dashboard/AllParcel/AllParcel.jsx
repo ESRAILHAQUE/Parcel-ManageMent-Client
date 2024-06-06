@@ -8,7 +8,7 @@ function AllParcel() {
     queryKey:[ 'parcel'],
     queryFn: async () => {
         const res = await axiosSecure.get("/parcels");
-           console.log(res.data);
+          //  console.log(res.data);
       return res.data
     
     }

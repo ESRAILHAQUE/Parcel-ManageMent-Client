@@ -9,8 +9,26 @@ import satisfaction from "../../../assets/Features/satisfaction.png";
 import { IoPeopleSharp } from "react-icons/io5";
 import { TbTruckDelivery } from "react-icons/tb";
 import { BiPurchaseTagAlt } from "react-icons/bi";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const Features = ({ stats }) => {
+  const axiosSecure = useAxiosSecure();
+  const { data: parcel = [] } = useQuery({
+    queryKey: ["parcel"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/parcels");
+      //  console.log(res.data);
+      return res.data;
+    },
+  });
+   const { data: users = [], refetch } = useQuery({
+     queryKey: ["users"],
+     queryFn: async () => {
+       const res = await axiosSecure.get("/allUsers");
+       return res.data;
+     },
+   });
   return (
     <div className="features my-10 mx-6">
       <div className="text-center my-5">
@@ -59,7 +77,7 @@ const Features = ({ stats }) => {
               <BiPurchaseTagAlt className="text-4xl" />
               <CountUp
                 className="text-4xl font-extrabold text-blue-600"
-                end={"30"}
+                end={parcel.length}
                 duration={2}
               />
             </div>
@@ -85,7 +103,7 @@ const Features = ({ stats }) => {
               <IoPeopleSharp className="text-4xl" />
               <CountUp
                 className="text-4xl font-extrabold text-blue-600"
-                end={"30"}
+                end={users.length}
                 duration={2}
               />
             </div>

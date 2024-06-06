@@ -1,7 +1,7 @@
 function ParcelTabular({ index, parcel }) {
     const { name, phoneNumber, price, bookingDate, Status, deliveryDate } =
       parcel;
-    console.log(parcel)
+    // console.log(parcel)
   return (
     <tr className="hover">
       <th>{index}</th>

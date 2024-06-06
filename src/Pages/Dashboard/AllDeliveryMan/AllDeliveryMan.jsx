@@ -7,7 +7,7 @@ function AllDeliveryMan() {
     queryKey:[ 'delivery'],
     queryFn: async () => {
         const res = await axiosSecure.get("/user/role?role=Delivery");
-           console.log(res.data);
+          //  console.log(res.data);
       return res.data
     
     }

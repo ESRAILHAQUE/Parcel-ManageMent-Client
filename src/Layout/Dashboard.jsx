@@ -3,8 +3,8 @@ import { NavLink, Outlet } from "react-router-dom"
 import useAdmin from "../Hooks/useAdmin";
 
 function Dashboard() {
-  const [isAdmin] = useAdmin();
-  console.log(isAdmin);
+  const { isAdmin, isLoading, error } = useAdmin();
+
   return (
     <div className="flex">
       <div className="bg-orange-300 px-6 min-h-screen">
@@ -27,13 +27,13 @@ function Dashboard() {
           ) : (
             <>
               <li>
-                <NavLink>My Profile</NavLink>
+                <NavLink to={'/dashboard/profile'}>My Profile</NavLink>
               </li>
               <li>
                 <NavLink to={"/dashboard/parcelBooking"}>Book a Parcel</NavLink>
               </li>
               <li>
-                <NavLink> My Parcels</NavLink>
+                <NavLink to={'/dashboard/userParcel'}> My Parcels</NavLink>
               </li>
             </>
           )}

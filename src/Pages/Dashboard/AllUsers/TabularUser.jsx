@@ -4,7 +4,7 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 function TabularUser({ user, index, refetch }) {
 
     const axiosSecure = useAxiosSecure()
-    console.log(user)
+    // console.log(user)
     const handleMakeAdmin = (user) => {
         axiosSecure.patch(`/users/admin/${user._id}`)
             .then(res => {

@@ -37,8 +37,9 @@ function ParcelBooking() {
       ...data,
       name: user.displayName,
       email: user.email,
-      bookingDate:new Date(),
+      bookingDate:new Date().toLocaleDateString("en-CA"),
       price,
+      Status:'Pending',
     };
 
     axiosPublic
@@ -66,8 +67,10 @@ function ParcelBooking() {
       <Helmet>
         <title>DelivTract | Bookings</title>
       </Helmet>
-          <div className=" flex justify-center mt-2 mx-auto"><img className=" w-56" src={parcelImg} alt="" /></div>
-          {/* <div className="divider"></div> */}
+      <div className=" flex justify-center mt-2 mx-auto">
+        <img className=" w-56" src={parcelImg} alt="" />
+      </div>
+      {/* <div className="divider"></div> */}
       <div className="hero min-h-screen bg-base-200 ">
         <div className="hero-content">
           <div className="card w-full shadow-2xl bg-base-100">
@@ -199,7 +202,6 @@ function ParcelBooking() {
                     className="input input-bordered"
                     {...register("deliveryDate")}
                   />
-                 
                 </div>
                 <div className="form-control">
                   <label className="label">

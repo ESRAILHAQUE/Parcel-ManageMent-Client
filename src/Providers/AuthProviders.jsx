@@ -36,31 +36,29 @@ function AuthProviders({ children }) {
         signOut(auth);
     }
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, currentUser => {
-            setUser(currentUser)
-            console.log('current user', currentUser);
-            if (currentUser) {
-                const userInfo = {
-                    email: currentUser.email
-                }
-                axiosPublic.post("/jwt", userInfo).then((res) => {
-                  if (res.data.token) {
-                    console.log("Token received:", res.data.token); // Debug log for received token
-                    localStorage.setItem("access-token", res.data.token);
-                  } else {
-                    console.log(
-                      "No token received, removing any existing token"
-                    ); // Debug log for no token
-                    localStorage.removeItem("access-token");
-                  }
-                });
+      const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        setUser(currentUser);
+        console.log("current user", currentUser);
+        if (currentUser) {
+          const userInfo = {
+            email: currentUser.email,
+          };
+          axiosPublic.post("/jwt", userInfo).then((res) => {
+            if (res.data.token) {
+            //   console.log("Token received:", res.data.token); // Debug log for received token
+              localStorage.setItem("access-token", res.data.token);
+            } else {
+              console.log("No token received, removing any existing token"); // Debug log for no token
+              localStorage.removeItem("access-token");
             }
-            setLoading(false);
-        });
-        return () => {
-            return unsubscribe();
+          });
         }
-    },[])
+        setLoading(false);
+      });
+      return () => {
+        return unsubscribe();
+      };
+    }, [axiosPublic]);
     const authInfo = {
         user,loading,createUser,signIn,logOut,googleSignIn
     }

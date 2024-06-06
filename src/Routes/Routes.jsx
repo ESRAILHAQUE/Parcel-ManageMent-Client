@@ -10,6 +10,8 @@ import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
 import AllDeliveryMan from "../Pages/Dashboard/AllDeliveryMan/AllDeliveryMan";
 import AllParcel from "../Pages/Dashboard/AllParcel/AllParcel";
 import Statastics from "../Pages/Dashboard/Statastics/Statastics";
+import BookedParcel from "../Pages/Dashboard/UserComponents/BookedParcel/BookedParcel";
+import UserProfile from "../Pages/Dashboard/UserComponents/Profile/UserProfile";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -38,13 +40,23 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
-        path: '/dashboard',
-        element:<Statastics></Statastics>
-    },
+        path: "/dashboard",
+        element: <Statastics></Statastics>,
+      },
+      // Normal User Routes
       {
         path: "parcelBooking",
         element: <ParcelBooking></ParcelBooking>,
       },
+      {
+        path: "profile",
+        element:<UserProfile></UserProfile>
+      },
+      {
+        path: "userParcel",
+        element: <BookedParcel></BookedParcel>,
+      },
+      // Delivery Man Routes
       // Admin Routes
       {
         path: "allUsers",
@@ -56,8 +68,8 @@ export const router = createBrowserRouter([
       },
       {
         path: "parcels",
-        element:<AllParcel></AllParcel>
-      }
+        element: <AllParcel></AllParcel>,
+      },
     ],
   },
 ]);
