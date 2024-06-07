@@ -11,9 +11,11 @@ function BookedParcel() {
   const { data: parcels = [], refetch } = useQuery({
     queryKey: ["parcels", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/parcels/${user.email}`);
+        const res = await axiosSecure.get(`/parcels/${user.email}`);
+       
       //  console.log(res.data);
-      return res.data;
+        return res.data;
+         refetch();
     },
   });
 

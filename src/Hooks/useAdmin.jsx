@@ -16,7 +16,7 @@ function useAdmin() {
     queryFn: async () => {
       try {
           const res = await axiosSecure.get(`/users/admin/${user.email}`);
-          console.log(res.data)
+        //   console.log(res.data)
         // Check if the response data is defined
         if (res.data !== undefined) {
           // Assuming your response contains a property 'isAdmin'
@@ -31,7 +31,7 @@ function useAdmin() {
     },
   });
 
-  console.log({ isAdmin, isLoading, error }); // Log all relevant states
+//   console.log({ isAdmin, isLoading, error }); // Log all relevant states
 
   return { isAdmin, isLoading, error }; // Return the state variables
 }
