@@ -6,8 +6,22 @@ import { IoIosNotificationsOutline } from "react-icons/io";
 import { useContext } from "react";
 import { Authcontext } from "../../../Providers/AuthProviders";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 function Navbar() {
-    const { user, logOut } = useContext(Authcontext)
+  const { user, logOut } = useContext(Authcontext);
+  const axiosSecure = useAxiosSecure();
+  const { data: DBusers = [], refetch } = useQuery({
+    queryKey: ["DBusers"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`allUsers/${user.email}`);
+      //  console.log(res.data);
+      
+      return res.data;
+      
+    },
+  });
+  // console.log(DBusers);
    const handleLogOut = () => {
      logOut()
       //  .then(() => {
@@ -93,12 +107,13 @@ function Navbar() {
           </ul>
         </div>
         <div className="navbar-end">
-          {user && (
+          
+          { refetch()&& user && (
             <div className="dropdown dropdown-end">
               <div tabIndex={0} role="button" className="m-1">
-                {user.photoURL ? (
+                {user.photoURL || DBusers?.image ? (
                   <img
-                    src={user.photoURL}
+                    src={user?.photoURL || DBusers?.image} //Put herer
                     alt="User"
                     className="w-12 h-12 rounded-full"
                   />
@@ -111,14 +126,13 @@ function Navbar() {
 
               <ul
                 tabIndex={0}
-                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 space-y-3 rounded-box w-52"
+                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 space-y-1 rounded-box w-52"
               >
-                <h1 className="text-center text-xl">Profile</h1>
+                <h1 className="text-center text-xl">{DBusers?.name}</h1>
                 <li>
-                  <a>Item 1</a>
+                  <Link to={"/dashboard"}>Dashboard</Link>
                 </li>
                 <li>
-                  <a>Item 2</a>
                 </li>
                 <li>
                   <button className="" onClick={handleLogOut}>

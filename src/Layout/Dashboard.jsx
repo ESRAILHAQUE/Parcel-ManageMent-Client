@@ -5,15 +5,17 @@ import { CgProfile } from "react-icons/cg";
 import { MdAddShoppingCart } from "react-icons/md";
 import { CiDeliveryTruck } from "react-icons/ci";
 import { TiTickOutline } from "react-icons/ti";
+import useDeliveryMan from "../Hooks/useDeliveryMan";
 
 function Dashboard() {
-  const { isAdmin, isLoading, error } = useAdmin();
-console.log(isAdmin)
+  const { isAdmin } = useAdmin();
+  const { isDeliveryMan } = useDeliveryMan();
+console.log(isDeliveryMan);
   return (
     <div className="flex">
       <div className="bg-orange-300 px-6 min-h-screen">
         <ul className=" text-blue-800 p-4 space-y-2">
-          {isAdmin ? (
+          {isAdmin && !isDeliveryMan && (
             <>
               <li>
                 <NavLink to={"parcels"}>All Parcels</NavLink>
@@ -22,13 +24,34 @@ console.log(isAdmin)
                 <NavLink to={"allUsers"}>All Users</NavLink>
               </li>
               <li>
-                <NavLink to={"allDelivery"}> All Delivery Men</NavLink>
+                <NavLink to={"allDelivery"}>All Delivery Men</NavLink>
               </li>
               <li>
-                <NavLink>Statistics</NavLink>
+                <NavLink to={"statistics"}>Statistics</NavLink>
               </li>
             </>
-          ) : (
+          )}
+          {isDeliveryMan && !isAdmin && (
+            <>
+              <li>
+                <NavLink to={"/dashboard/delivaryList"}>
+                  <div className="flex items-center gap-2">
+                    <TiTickOutline className="text-3xl" />
+                    My Delivery List
+                  </div>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to={"/dashboard/review"}>
+                  <div className="flex items-center gap-2">
+                    <FaRegGrinStars className="text-2xl" />
+                    My Review
+                  </div>
+                </NavLink>
+              </li>
+            </>
+          )}
+          {!isAdmin && !isDeliveryMan && (
             <>
               <li>
                 <NavLink to={"/dashboard/profile"}>
@@ -54,29 +77,14 @@ console.log(isAdmin)
                   </div>
                 </NavLink>
               </li>
-              {/* Delivery Man Navlink */}
-              <li>
-                <NavLink to={"/dashboard/delivaryList"}>
-                  <div className="flex  items-center gap-2">
-                    <TiTickOutline className="text-3xl" />
-                    My Delivery List
-                  </div>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to={"/dashboard/review"}>
-                  <div className="flex items-center gap-2">
-                    <FaRegGrinStars className="text-2xl" />
-                    My Review
-                  </div>
-                </NavLink>
-              </li>
             </>
           )}
+
           <div className="divider"></div>
           <li>
             <NavLink to={"/"} className="flex gap-2 items-center">
-              <FaHome className="text-2xl"></FaHome> Home
+              <FaHome className="text-2xl" />
+              Home
             </NavLink>
           </li>
         </ul>

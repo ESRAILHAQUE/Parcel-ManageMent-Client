@@ -14,8 +14,8 @@ function UserProfile() {
         return res.data;
       },
     });
-    console.log(users.name)
-  console.log(user);
+  //   console.log(users.name)
+  // console.log(user);
   const handleCopy = (text) => {
     navigator.clipboard
       .writeText(text)
@@ -35,7 +35,7 @@ function UserProfile() {
       <div className="flex gap-8  p-3 border flex-col md:flex-row lg:flex-row">
         <div className="avatar online">
           <div className="w-28 rounded-full transform transition-transform duration-300 hover:opacity-50">
-            <img src={user?.photoURL} />
+            <img src={user?.photoURL || users?.image} />
           </div>
         </div>
 

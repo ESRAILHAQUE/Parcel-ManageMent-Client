@@ -4,9 +4,9 @@ import DeliveryTabular from "./DeliveryTabular";
 function AllDeliveryMan() {
   const axiosSecure = useAxiosSecure();
   const { data: delivery=[],refetch} = useQuery({
-    queryKey:[ 'delivery'],
+    queryKey:[ 'deliveryMan'],
     queryFn: async () => {
-        const res = await axiosSecure.get("/user/role?role=Delivery");
+        const res = await axiosSecure.get("/user/role?role=DeliveryMan");
           //  console.log(res.data);
       return res.data
     

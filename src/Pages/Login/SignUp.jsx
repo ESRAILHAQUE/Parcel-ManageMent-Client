@@ -27,8 +27,9 @@ function SignUp() {
       .then(result => {
            const userInfo = {
              email: result?.user?.email,
-             name:result?.user?.displayName
-        };
+             name: result?.user?.displayName,
+             role: "user",
+           };
         axiosPublic.post('/users', userInfo)
           .then(res => {
           
@@ -39,11 +40,24 @@ function SignUp() {
   }
   
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+    const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+    const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
+
+    const imageFile = { image: data.image[0] }
+    const res = await axiosPublic.post(image_hosting_api, imageFile, {
+      headers: {
+       'Content-Type':'multipart/form-data'
+     }
+    })
+    console.log(res.data)
+    const image = res.data.data.display_url;
+;
     const userInfo = {
       name: data.name,
       email: data.email,
-      role:'User',
+      role: data.role,
+      image: image,
     }
     createUser(data.email, data.password)
       .then(() => {
@@ -84,8 +98,7 @@ function SignUp() {
         });
       });
   };
-
-
+  
   return (
     <>
       <Helmet>
@@ -140,6 +153,25 @@ function SignUp() {
               </div>
               <div className="form-control">
                 <label className="label">
+                  <span className="label-text">Upload Image</span>
+                </label>
+                <input
+                  {...register('image',{required:true})}
+                  type="file"
+                  className="file-input file-input-bordered w-full max-w-xs"
+                />
+              </div>
+              <div className="form-control">
+                <select defaultValue='default' {...register('role',{required:true})} className="select select-bordered w-full max-w-xs">
+                  <option disabled value='default'>
+                    Register Type
+                  </option>
+                  <option value={'user'}>User</option>
+                  <option value={'DeliveryMan'}>Delivery Man</option>
+                </select>
+              </div>
+              <div className="form-control">
+                <label className="label">
                   <span className="label-text">Password</span>
                 </label>
                 <input
@@ -169,22 +201,20 @@ function SignUp() {
               </div>
             </form>
             <div className="text-center mb-4 space-y-2">
-              <p>
+              <div>
                 Already registered?
                 <Link to={"/login"}>
                   <span className="text-purple-500">Login</span>
                 </Link>
                 <div className="divider">OR</div>
-              </p>
+              </div>
               <p>Sign Up with</p>
               <p className="flex gap-3 justify-center">
                 <span className="flex items-center gap-2 p-2 border-2 rounded-lg hover:drop-shadow-xl">
-                 
-                    <button className="flex gap-2" onClick={handleGoogleLogin}>
-                      <FcGoogle className="text-2xl" />
-                      Google
-                    </button>
-               
+                  <button className="flex gap-2" onClick={handleGoogleLogin}>
+                    <FcGoogle className="text-2xl" />
+                    Google
+                  </button>
                 </span>
                 <span className="flex items-center gap-2 p-2 border-2  rounded-lg">
                   <FaFacebook className="text-2xl"></FaFacebook>Facebook

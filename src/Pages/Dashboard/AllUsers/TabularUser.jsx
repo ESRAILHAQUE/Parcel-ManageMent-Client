@@ -42,7 +42,7 @@ function TabularUser({ user, index, refetch }) {
         <td>{user.name}</td>
         <td>Phone Number</td>
         <td>
-          {user?.role === "Delivery" ? (
+          {user?.role === "DeliveryMan" ? (
             "Delivery Man"
           ) : (
             <button

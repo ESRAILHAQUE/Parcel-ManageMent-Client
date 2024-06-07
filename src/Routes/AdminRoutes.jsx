@@ -4,7 +4,7 @@ import useAdmin from "../Hooks/useAdmin";
 import { Navigate, useLocation } from "react-router-dom";
 import { FallingLines } from "react-loader-spinner";
 
-function AdminRoutes() {
+function AdminRoutes({children}) {
     const { user, loading } = useContext(Authcontext);
     const { isAdmin, isLoading } = useAdmin();
     const location = useLocation();

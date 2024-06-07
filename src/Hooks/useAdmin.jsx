@@ -17,15 +17,17 @@ function useAdmin() {
     queryFn: async () => {
       try {
         const res = await axiosSecure.get(`/users/admin/${user.email}`);
-        //   console.log(res.data)
+          console.log(res.data)
         // Check if the response data is defined
           return res.data?.admin;
+         
       } catch (error) {
         console.error("Error fetching isAdmin:", error);
         return false; // Returning a default value in case of error
       }
     },
   });
+    
 
 //   console.log({ isAdmin, isLoading, error }); // Log all relevant states
 

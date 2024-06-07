@@ -5,10 +5,19 @@ import { useForm } from "react-hook-form";
 import parcelImg from '../../../assets/Parcel/parcel.png'
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
 
 function ParcelBooking() {
     const { user } = useContext(Authcontext);
-    const axiosPublic = useAxiosPublic();
+  const axiosPublic = useAxiosPublic();
+  const { data: DBusers = [], refetch } = useQuery({
+    queryKey: ["DBusers"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`allUsers/${user.email}`);
+      //  console.log(res.data);
+      return res.data;
+    },
+  });
   const {
     register,
     handleSubmit,
@@ -60,6 +69,7 @@ function ParcelBooking() {
       .catch((error) => {
         console.error("There was an error submitting the booking!", error);
       });
+    refetch();
   };
 
   return (
@@ -87,7 +97,7 @@ function ParcelBooking() {
                     type="text"
                     placeholder="Name"
                     className="input input-bordered"
-                    value={user.displayName}
+                    value={user?.displayName || DBusers?.name}
                     readOnly
                     {...register("name")}
                   />
