@@ -1,10 +1,14 @@
-import { FaHome } from "react-icons/fa";
+import { FaHome, FaRegGrinStars } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom"
 import useAdmin from "../Hooks/useAdmin";
+import { CgProfile } from "react-icons/cg";
+import { MdAddShoppingCart } from "react-icons/md";
+import { CiDeliveryTruck } from "react-icons/ci";
+import { TiTickOutline } from "react-icons/ti";
 
 function Dashboard() {
   const { isAdmin, isLoading, error } = useAdmin();
-
+console.log(isAdmin)
   return (
     <div className="flex">
       <div className="bg-orange-300 px-6 min-h-screen">
@@ -27,20 +31,52 @@ function Dashboard() {
           ) : (
             <>
               <li>
-                <NavLink to={'/dashboard/profile'}>My Profile</NavLink>
+                <NavLink to={"/dashboard/profile"}>
+                  <div className="flex items-center gap-2">
+                    <CgProfile className="text-2xl" />
+                    My Profile
+                  </div>
+                </NavLink>
               </li>
               <li>
-                <NavLink to={"/dashboard/parcelBooking"}>Book a Parcel</NavLink>
+                <NavLink to={"/dashboard/parcelBooking"}>
+                  <div className="flex items-center gap-2">
+                    <MdAddShoppingCart className="text-2xl" />
+                    Book a Parcel
+                  </div>
+                </NavLink>
               </li>
               <li>
-                <NavLink to={'/dashboard/userParcel'}> My Parcels</NavLink>
+                <NavLink to={"/dashboard/userParcel"}>
+                  <div className="flex items-center gap-2">
+                    <CiDeliveryTruck className="text-2xl" />
+                    My Parcels
+                  </div>
+                </NavLink>
+              </li>
+              {/* Delivery Man Navlink */}
+              <li>
+                <NavLink to={"/dashboard/delivaryList"}>
+                  <div className="flex  items-center gap-2">
+                    <TiTickOutline className="text-3xl" />
+                    My Delivery List
+                  </div>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to={"/dashboard/review"}>
+                  <div className="flex items-center gap-2">
+                    <FaRegGrinStars className="text-2xl" />
+                    My Review
+                  </div>
+                </NavLink>
               </li>
             </>
           )}
           <div className="divider"></div>
           <li>
             <NavLink to={"/"} className="flex gap-2 items-center">
-              <FaHome></FaHome> Home
+              <FaHome className="text-2xl"></FaHome> Home
             </NavLink>
           </li>
         </ul>

@@ -45,13 +45,13 @@ function AuthProviders({ children }) {
           };
           axiosPublic.post("/jwt", userInfo).then((res) => {
             if (res.data.token) {
-            //   console.log("Token received:", res.data.token); // Debug log for received token
+              //   console.log("Token received:", res.data.token);
               localStorage.setItem("access-token", res.data.token);
-            } else {
-              console.log("No token received, removing any existing token"); // Debug log for no token
-              localStorage.removeItem("access-token");
             }
           });
+        } else {
+          console.log("No token received, removing any existing token");
+          localStorage.removeItem("access-token");
         }
         setLoading(false);
       });

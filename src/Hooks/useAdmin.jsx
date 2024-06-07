@@ -13,17 +13,13 @@ function useAdmin() {
     error,
   } = useQuery({
     queryKey: [user?.email, "isAdmin"],
+    enabled: !!user?.email,
     queryFn: async () => {
       try {
-          const res = await axiosSecure.get(`/users/admin/${user.email}`);
+        const res = await axiosSecure.get(`/users/admin/${user.email}`);
         //   console.log(res.data)
         // Check if the response data is defined
-        if (res.data !== undefined) {
-          // Assuming your response contains a property 'isAdmin'
-          return res.data.isAdmin; // Returning the isAdmin property
-        } else {
-          throw new Error("Response data is undefined");
-        }
+          return res.data?.admin;
       } catch (error) {
         console.error("Error fetching isAdmin:", error);
         return false; // Returning a default value in case of error

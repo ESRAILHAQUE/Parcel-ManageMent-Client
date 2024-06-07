@@ -10,8 +10,6 @@ function PrivateRoutes({children}) {
         return (
           <>
             <div className="text-center mt-7">
-            
-
               <div className="flex justify-center">
                 <FallingLines
                   color="#4fa94d"

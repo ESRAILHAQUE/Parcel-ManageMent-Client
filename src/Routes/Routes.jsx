@@ -12,6 +12,8 @@ import AllParcel from "../Pages/Dashboard/AllParcel/AllParcel";
 import Statastics from "../Pages/Dashboard/Statastics/Statastics";
 import BookedParcel from "../Pages/Dashboard/UserComponents/BookedParcel/BookedParcel";
 import UserProfile from "../Pages/Dashboard/UserComponents/Profile/UserProfile";
+import AdminRoutes from './AdminRoutes';
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -50,7 +52,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "profile",
-        element:<UserProfile></UserProfile>
+        element: <UserProfile></UserProfile>,
       },
       {
         path: "userParcel",
@@ -60,7 +62,11 @@ export const router = createBrowserRouter([
       // Admin Routes
       {
         path: "allUsers",
-        element: <AllUsers></AllUsers>,
+        element: (
+          <AdminRoutes>
+            <AllUsers></AllUsers>
+          </AdminRoutes>
+        ),
       },
       {
         path: "allDelivery",
