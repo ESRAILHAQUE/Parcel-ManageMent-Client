@@ -68,10 +68,10 @@ export const router = createBrowserRouter([
         element: <BookedParcel></BookedParcel>,
       },
       // Delivery Man Routes
-      // {
-      //   path: "deliveryList",
-      //   element: <DeliveryList></DeliveryList>,
-      // },
+      {
+        path: "deliveryList",
+        element: <DeliveryList></DeliveryList>,
+      },
       // Admin Routes
       {
         path: "allUsers",
