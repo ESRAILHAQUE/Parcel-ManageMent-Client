@@ -13,6 +13,8 @@ import Statastics from "../Pages/Dashboard/Statastics/Statastics";
 import BookedParcel from "../Pages/Dashboard/UserComponents/BookedParcel/BookedParcel";
 import UserProfile from "../Pages/Dashboard/UserComponents/Profile/UserProfile";
 import AdminRoutes from './AdminRoutes';
+import UpdateParcel from "../Pages/Dashboard/UpdateParcel/UpdateParcel";
+import DeliveryList from "../Pages/Dashboard/DeliveryMan/DeliveryList/DeliveryList";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +35,7 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  // Dashboard Page Routes
   {
     path: "/dashboard",
     element: (
@@ -41,14 +44,20 @@ export const router = createBrowserRouter([
       </PrivateRoutes>
     ),
     children: [
-      {
-        path: "/dashboard",
-        element: <Statastics></Statastics>,
-      },
+      // {
+      //   path: "/dashboard",
+      //   element: <Statastics></Statastics>,
+      // },
       // Normal User Routes
       {
         path: "parcelBooking",
         element: <ParcelBooking></ParcelBooking>,
+      },
+      {
+        path: "updateParcel/:id",
+        element: <UpdateParcel></UpdateParcel>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/parcelsId/${params.id}`),
       },
       {
         path: "profile",
@@ -59,6 +68,10 @@ export const router = createBrowserRouter([
         element: <BookedParcel></BookedParcel>,
       },
       // Delivery Man Routes
+      // {
+      //   path: "deliveryList",
+      //   element: <DeliveryList></DeliveryList>,
+      // },
       // Admin Routes
       {
         path: "allUsers",

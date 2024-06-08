@@ -17,7 +17,7 @@ function useAdmin() {
     queryFn: async () => {
       try {
         const res = await axiosSecure.get(`/users/admin/${user.email}`);
-          console.log(res.data)
+        //   console.log(res.data)
         // Check if the response data is defined
           return res.data?.admin;
          

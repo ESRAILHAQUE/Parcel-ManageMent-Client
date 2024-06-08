@@ -17,8 +17,8 @@ function useDeliveryMan() {
     queryFn: async () => {
       try {
         const res = await axiosSecure.get(`/users/deliveryMan/${user.email}`);
-        console.log(res.data);
-        // Check if the response data is defined
+        // console.log(res.data);
+        // // Check if the response data is defined
        return res.data?.deliveryMan ?? false;
       } catch (error) {
         console.error("Error fetching isDeliveryMan:", error);

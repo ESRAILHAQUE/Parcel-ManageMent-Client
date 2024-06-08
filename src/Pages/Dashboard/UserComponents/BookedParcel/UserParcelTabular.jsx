@@ -6,6 +6,7 @@ import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import { useQueryClient } from "@tanstack/react-query";
 import BookedParcel from "./BookedParcel";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 
 
@@ -67,9 +68,11 @@ function UserParcelTabular({ parcel, index,refetch }) {
       <td className="text-orange-300">{Status}</td>
       <td>
         {Status === "Pending" ? (
-          <button className="btn bg-purple-500 text-green-500  text-xl font-bold">
-            <FaEdit></FaEdit>
-          </button>
+          <Link to={`/dashboard/updateParcel/${parcel._id}`}>
+            <button className="btn bg-purple-500 text-green-500  text-xl font-bold">
+              <FaEdit></FaEdit>
+            </button>
+          </Link>
         ) : (
           <button
             disabled
@@ -117,7 +120,10 @@ function UserParcelTabular({ parcel, index,refetch }) {
             <GiPayMoney />
           </button>
         ) : (
-          <button  disabled className="btn bg-green-500 text-white text-xl font-bold">
+          <button
+            disabled
+            className="btn bg-green-500 text-white text-xl font-bold"
+          >
             <GiPayMoney />
           </button>
         )}

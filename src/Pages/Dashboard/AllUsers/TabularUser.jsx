@@ -37,7 +37,7 @@ function TabularUser({ user, index, refetch }) {
     }
    
     return (
-      <tr className="hover">
+      <tr className="hover text-center">
         <th>{index}</th>
         <td>{user.name}</td>
         <td>Phone Number</td>

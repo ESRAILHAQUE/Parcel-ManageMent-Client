@@ -10,10 +10,10 @@ import useDeliveryMan from "../Hooks/useDeliveryMan";
 function Dashboard() {
   const { isAdmin } = useAdmin();
   const { isDeliveryMan } = useDeliveryMan();
-console.log(isDeliveryMan);
+// console.log(isDeliveryMan);
   return (
     <div className="flex">
-      <div className="bg-orange-300 px-6 min-h-screen">
+      <div className="bg-orange-300 px-2 min-h-screen">
         <ul className=" text-blue-800 p-4 space-y-2">
           {isAdmin && !isDeliveryMan && (
             <>
@@ -34,7 +34,7 @@ console.log(isDeliveryMan);
           {isDeliveryMan && !isAdmin && (
             <>
               <li>
-                <NavLink to={"/dashboard/delivaryList"}>
+                <NavLink to={"/dashboard/deliveryList"}>
                   <div className="flex items-center gap-2">
                     <TiTickOutline className="text-3xl" />
                     My Delivery List

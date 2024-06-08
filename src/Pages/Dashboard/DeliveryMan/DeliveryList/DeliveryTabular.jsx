@@ -1,14 +1,18 @@
-import {  useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
+import { IoLocation } from "react-icons/io5";
+import { ImCross } from "react-icons/im";
 
-function ParcelTabular({ index, parcel}) {
-  const { name, phoneNumber, price, bookingDate, Status, deliveryDate, _id } =
+function DeliveryTabular({ index, parcel }) {
+  const { name,receiverName, phoneNumber,ApproximateDeliveryDate
+, price, bookingDate,receiverPhoneNumber,deliveryAddress, Status, deliveryDate, _id } =
     parcel;
   const axiosSecure = useAxiosSecure();
-   
+
   const { data: delivery = [], refetch } = useQuery({
     queryKey: ["deliveryMan"],
     queryFn: async () => {
@@ -23,60 +27,60 @@ function ParcelTabular({ index, parcel}) {
     reset,
     formState: { errors },
   } = useForm();
- 
-const onSubmit = async (data) => {
-  // Log the form data and parcelId
-  console.log(data, _id);
-  const parcelId = _id;
-  // Construct the assigningData object
-  const assigningData = {
-    DeliveryManID: data["DeliveryManID"],
-    ApproximateDeliveryDate: data["approximateDeliveryDate"], // Access values by their names
-    Status: "On the way",
-  };
 
-  // console.log(assigningData);
-     refetch();
+  const onSubmit = async (data) => {
+    // Log the form data and parcelId
+    console.log(data, _id);
+    const parcelId = _id;
+    // Construct the assigningData object
+    const assigningData = {
+      DeliveryManID: data["DeliveryManID"],
+      ApproximateDeliveryDate: data["approximateDeliveryDate"], // Access values by their names
+      Status: "On the way",
+    };
 
-  try {
-    const res = await axiosSecure.patch(`/parcelsAssign/${parcelId}`, assigningData);
-    if (res.data.modifiedCount > 0) {
-      refetch();
-      Swal.fire({
-        title: "Assigned to Delivery Man!",
-        text: `Parcel has been Assign to ${delivery?.name || 'Delivery Man'}`,
-        icon: "success",
-      });
-     
-       document.getElementById(`my_modal_${_id}`).close();
-       
+    // console.log(assigningData);
+    refetch();
+
+    try {
+      const res = await axiosSecure.patch(
+        `/parcelsAssign/${parcelId}`,
+        assigningData
+      );
+      if (res.data.modifiedCount > 0) {
+        refetch();
+        Swal.fire({
+          title: "Assigned to Delivery Man!",
+          text: `${parcel.name} has been Assign`,
+          icon: "success",
+        });
+
+        document.getElementById(`my_modal_${_id}`).close();
+      }
+      console.log("Response:", res.data);
+    } catch (error) {
+      console.error("Error updating parcel:", error);
     }
-    console.log("Response:", res.data);
-   
-    
-  } catch (error) {
-    console.error("Error updating parcel:", error);
-  }
-};
-
+  };
 
   return (
     <tr className="hover text-center">
-     
       <th>{index}</th>
       <td>{name}</td>
+      <td>{receiverName}</td>
       <td>{phoneNumber}</td>
-      <td>{bookingDate}</td>
       <td>{deliveryDate}</td>
 
-      <td>{price}</td>
-      <td>{Status}</td>
+      <td>{ApproximateDeliveryDate}</td>
+      <td>{receiverPhoneNumber}</td>
+      <td>{deliveryAddress}</td>
+
       <td>
         <button
-          className="btn bg-orange-400"
+          className="btn bg-orange-400 flex"
           onClick={() => document.getElementById(`my_modal_${_id}`).showModal()}
         >
-          Manage
+          <IoLocation className="text-2xl text-white" />
         </button>
         <dialog id={`my_modal_${_id}`} className="modal">
           <div className="modal-box">
@@ -136,8 +140,14 @@ const onSubmit = async (data) => {
           </div>
         </dialog>
       </td>
+      <td>
+        <button className="btn bg-red-600 text-white">
+          <ImCross className=" text-xl" />
+        </button>
+      </td>
+      <td><button className="btn btn-success">Deliver</button></td>
     </tr>
   );
 }
 
-export default ParcelTabular;
+export default DeliveryTabular;

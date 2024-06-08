@@ -2,36 +2,39 @@ import React, { useContext, useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Authcontext } from "../../../Providers/AuthProviders";
 import { useForm } from "react-hook-form";
-import parcelImg from '../../../assets/Parcel/parcel.png'
-import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import parcelImg from "../../../assets/Parcel/parcel.png";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
-import { useQuery } from "@tanstack/react-query";
+import { useLoaderData, useParams } from "react-router-dom";
 
-function ParcelBooking() {
-    const { user } = useContext(Authcontext);
-  const axiosPublic = useAxiosPublic();
-  const { data: DBusers = [], refetch } = useQuery({
-    queryKey: ["DBusers"],
-    queryFn: async () => {
-      const res = await axiosSecure.get(`allUsers/${user.email}`);
-      //  console.log(res.data);
-      return res.data;
-    },
-  });
+function UpdateParcel() {
+  const { user } = useContext(Authcontext);
+    const existParcel = useLoaderData();
+    console.log(existParcel);
+  const { id } = useParams();
+
+  const axiosSecure = useAxiosSecure();
+
   const {
     register,
     handleSubmit,
     watch,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: existParcel,
+  });
+
+  useEffect(() => {
+    reset(existParcel); // Populate the form with existing parcel data
+  }, [existParcel, reset]);
+
   const [price, setPrice] = useState(0);
 
   const calculatePrice = (weight) => {
-      if (weight <= 1) {
-          return 50;
-         
-    } 
+    if (weight <= 1) {
+      return 50;
+    }
     if (weight <= 2) return 100;
     return 150;
   };
@@ -41,47 +44,48 @@ function ParcelBooking() {
     setPrice(calculatePrice(weight));
   }, [watch("parcelWeight")]);
 
-  const onSubmit = (data) => {
-    const bookingData = {
+  const onSubmit = async (data) => {
+    const updatingData = {
       ...data,
-      name: DBusers?.name,
+      name: user.displayName,
       email: user.email,
-      bookingDate:new Date().toLocaleDateString("en-CA"),
+      bookingDate: new Date().toLocaleDateString("en-CA"),
       price,
-      Status:'Pending',
+      Status: "Pending",
     };
 
-    axiosPublic
-      .post("/user/bookings", bookingData)
-      .then((response) => {
-        console.log("Booking submitted: ", response.data);
-          reset();
-          if (response.data.insertedId) {
-               Swal.fire({
-                 position: "top-end",
-                 icon: "success",
-                 title: "Bookings success",
-                 showConfirmButton: false,
-                 timer: 1500,
-               });
-          }
-      })
-      .catch((error) => {
-        console.error("There was an error submitting the booking!", error);
+    try {
+      const res = await axiosSecure.put(`/parcels/${id}`, updatingData);
+      if (res.data.modifiedCount > 0) {
+        Swal.fire({
+          title: "Updated!",
+          text: `${data.parcelType} has been updated`,
+          icon: "success",
+        });
+      }
+    } catch (error) {
+      console.error("Error updating parcel:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "There was an error updating the parcel.",
+        icon: "error",
       });
-    refetch();
+    }
   };
+
+  if (!existParcel) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
       <Helmet>
-        <title>DelivTract | Bookings</title>
+        <title>DelivTract | Update</title>
       </Helmet>
-      <div className=" flex justify-center mt-2 mx-auto">
-        <img className=" w-56" src={parcelImg} alt="" />
+      <div className="flex justify-center mt-2 mx-auto">
+        <img className="w-56" src={parcelImg} alt="Parcel" />
       </div>
-      {/* <div className="divider"></div> */}
-      <div className="hero min-h-screen bg-base-200 ">
+      <div className="hero min-h-screen bg-base-200">
         <div className="hero-content">
           <div className="card w-full shadow-2xl bg-base-100">
             <form
@@ -97,7 +101,7 @@ function ParcelBooking() {
                     type="text"
                     placeholder="Name"
                     className="input input-bordered"
-                    value={user?.displayName || DBusers?.name}
+                    value={existParcel?.name}
                     readOnly
                     {...register("name")}
                   />
@@ -124,6 +128,7 @@ function ParcelBooking() {
                   <input
                     type="text"
                     placeholder="Phone Number"
+                    defaultValue={existParcel?.phoneNumber}
                     className="input input-bordered"
                     {...register("phoneNumber", { required: true })}
                   />
@@ -136,6 +141,7 @@ function ParcelBooking() {
                   <input
                     type="text"
                     placeholder="Parcel Type"
+                    defaultValue={existParcel?.parcelType}
                     className="input input-bordered"
                     {...register("parcelType", { required: true })}
                   />
@@ -151,10 +157,11 @@ function ParcelBooking() {
                   <input
                     type="number"
                     placeholder="Parcel Weight"
+                    defaultValue={existParcel?.parcelWeight}
                     className="input input-bordered"
                     {...register("parcelWeight", { required: true, min: 1 })}
                   />
-                  {errors.parcelWeight && <span> must be greater than 0</span>}
+                  {errors.parcelWeight && <span>Must be greater than 0</span>}
                 </div>
                 <div className="form-control">
                   <label className="label">
@@ -163,6 +170,7 @@ function ParcelBooking() {
                   <input
                     type="text"
                     placeholder="Receiver’s Name"
+                    defaultValue={existParcel?.receiverName}
                     className="input input-bordered"
                     {...register("receiverName", { required: true })}
                   />
@@ -178,6 +186,7 @@ function ParcelBooking() {
                   <input
                     type="text"
                     placeholder="Receiver's Phone Number"
+                    defaultValue={existParcel?.receiverPhoneNumber}
                     className="input input-bordered"
                     {...register("receiverPhoneNumber", { required: true })}
                   />
@@ -192,6 +201,7 @@ function ParcelBooking() {
                   <input
                     type="text"
                     placeholder="Parcel Delivery Address"
+                    defaultValue={existParcel?.deliveryAddress}
                     className="input input-bordered"
                     {...register("deliveryAddress", { required: true })}
                   />
@@ -209,6 +219,7 @@ function ParcelBooking() {
                   <input
                     type="date"
                     placeholder="Requested Delivery Date"
+                    defaultValue={existParcel?.deliveryDate}
                     className="input input-bordered"
                     {...register("deliveryDate")}
                   />
@@ -221,7 +232,8 @@ function ParcelBooking() {
                   </label>
                   <input
                     type="text"
-                    placeholder="i.e 21.121365496"
+                    placeholder="e.g., 21.121365496"
+                    defaultValue={existParcel?.deliveryLatitude}
                     className="input input-bordered"
                     {...register("deliveryLatitude", { required: true })}
                   />
@@ -240,7 +252,8 @@ function ParcelBooking() {
                   </label>
                   <input
                     type="text"
-                    placeholder="i.e 21.121365496"
+                    placeholder="e.g., 21.121365496"
+                    defaultValue={existParcel?.deliveryLongitude}
                     className="input input-bordered"
                     {...register("deliveryLongitude", { required: true })}
                   />
@@ -255,16 +268,16 @@ function ParcelBooking() {
                   <input
                     type="number"
                     placeholder="Price"
-                    className="input input-bordered"
                     value={price}
+                    className="input input-bordered"
                     readOnly
                   />
                 </div>
               </div>
 
               <div className="form-control mt-6">
-                <button className="btn btn-primary" type="submit">
-                  Submit
+                <button className="btn btn-secondary" type="submit">
+                  Update
                 </button>
               </div>
             </form>
@@ -275,4 +288,4 @@ function ParcelBooking() {
   );
 }
 
-export default ParcelBooking;
+export default UpdateParcel;

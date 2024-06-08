@@ -18,11 +18,12 @@ function AllUsers() {
         <table className="table ">
           {/* head */}
           <thead>
-            <tr>
+            <tr className="text-center">
               <th></th>
               <th>Name</th>
               <th>Phone Number</th>
-              <th>Number of parcel Booked</th>
+              <th>Action</th>
+              <th>Action</th>
              
             </tr>
           </thead>

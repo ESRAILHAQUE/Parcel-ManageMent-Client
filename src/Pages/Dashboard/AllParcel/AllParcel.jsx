@@ -22,7 +22,7 @@ function AllParcel() {
         <table className="table ">
           {/* head */}
           <thead>
-            <tr>
+            <tr className="text-center">
               <th>#</th>
               <th>Name</th>
               <th>Phone Number</th>
