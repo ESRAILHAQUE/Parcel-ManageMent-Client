@@ -13,6 +13,7 @@ function Navbar() {
   const axiosSecure = useAxiosSecure();
   const { data: DBusers = [], refetch } = useQuery({
     queryKey: ["DBusers"],
+    enabled:!!user?.email,
     queryFn: async () => {
       const res = await axiosSecure.get(`allUsers/${user.email}`);
       //  console.log(res.data);
@@ -21,7 +22,7 @@ function Navbar() {
       
     },
   });
-  // console.log(DBusers);
+  console.log(DBusers);
    const handleLogOut = () => {
      logOut()
       //  .then(() => {
@@ -107,8 +108,7 @@ function Navbar() {
           </ul>
         </div>
         <div className="navbar-end">
-          
-          { refetch()&& user && (
+          {refetch() && user && (
             <div className="dropdown dropdown-end">
               <div tabIndex={0} role="button" className="m-1">
                 {user.photoURL || DBusers?.image ? (
@@ -119,7 +119,9 @@ function Navbar() {
                   />
                 ) : (
                   <div className="w-12 h-12  rounded-full bg-gray-300 flex items-center justify-center">
-                    <span className="text-sm">{user.displayName?.[0]}</span>
+                    <span className="text-sm">
+                      {user.displayName?.[0] || DBusers?.name}
+                    </span>
                   </div>
                 )}
               </div>
@@ -132,8 +134,7 @@ function Navbar() {
                 <li>
                   <Link to={"/dashboard"}>Dashboard</Link>
                 </li>
-                <li>
-                </li>
+                <li></li>
                 <li>
                   <button className="" onClick={handleLogOut}>
                     LogOut

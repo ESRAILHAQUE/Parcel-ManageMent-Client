@@ -1,20 +1,30 @@
 import { useContext } from "react";
-import { Authcontext } from "../../../../Providers/AuthProviders";
+
 import { MdContentCopy } from "react-icons/md";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import { Authcontext } from "../../../../Providers/AuthProviders";
 
 function UserProfile() {
     const { user } = useContext(Authcontext);
      const axiosSecure = useAxiosSecure();
-    const { data: users = [], refetch } = useQuery({
-      queryKey: ["users"],
-      queryFn: async () => {
-          const res = await axiosSecure.get(`/allUsers/${user.email}`);
-        return res.data;
-      },
-    });
-  //   console.log(users.name)
+    // const { data: users = [] } = useQuery({
+    //   queryKey: ["users"],
+    //   queryFn: async () => {
+    //       const res = await axiosSecure.get(`/allUsers/${user.email}`);
+    //     return res.data;
+    //   },
+    // });
+  
+   const { data: users = [],refetch } = useQuery({
+     queryKey: ["users"],
+     queryFn: async () => {
+       const res = await axiosSecure.get(`allUsers/${user.email}`);
+       return res.data;
+     },  
+   });
+
+    console.log(users.email)
   // console.log(user);
   const handleCopy = (text) => {
     navigator.clipboard
@@ -42,7 +52,7 @@ function UserProfile() {
         <div className="space-y-1">
           <div className="flex items-center space-x-2">
             <p className="mr-3">
-               {user?.displayName ? user?.displayName : users?.name}
+               { user?.displayName || users?.name}
             </p>
             <button onClick={() => handleCopy(user?.displayName || users?.name)}>
               <MdContentCopy />

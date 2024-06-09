@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
-import DeliveryTabular from "./DeliveryTabular";
+
 import { useContext } from "react";
 import { Authcontext } from "../../../../Providers/AuthProviders";
+import DeliveryTable from "./DeliveryTable";
 
 function DeliveryList() {
   const { user } = useContext(Authcontext);
@@ -29,7 +30,7 @@ function DeliveryList() {
       return res.data;
     },
   });
-  console.log(myParcel);
+//   console.log(myParcel);
 
   return (
     <div>
@@ -70,7 +71,7 @@ function DeliveryList() {
           <tbody>
             {/* rows */}
             {myParcel.map((parcel, index) => (
-              <DeliveryTabular
+              <DeliveryTable
                 key={parcel._id}
                 parcel={parcel}
                 index={index + 1}

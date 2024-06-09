@@ -54,6 +54,7 @@ function UserParcelTabular({ parcel, index,refetch }) {
     deliveryDate,
     parcelType,
     Status,
+    DeliveryManID
   } = parcel;
 
   return (
@@ -64,7 +65,7 @@ function UserParcelTabular({ parcel, index,refetch }) {
       <td>{deliveryDate}</td>
       <td>{bookingDate}</td>
 
-      <td>{"D-344"}</td>
+      <td>{DeliveryManID}</td>
       <td className="text-orange-300">{Status}</td>
       <td>
         {Status === "Pending" ? (
