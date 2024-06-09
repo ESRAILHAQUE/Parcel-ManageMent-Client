@@ -103,9 +103,19 @@ function UserParcelTabular({ parcel, index,refetch }) {
       </td>
       <td>
         {Status === "Delivered" ? (
-          <button className="btn bg-yellow-400 text-white text-xl font-bold">
-            <GoCodeReview />
-          </button>
+          <Link
+            to={{
+              pathname: "/dashboard/reviewForm",
+              state: { parcel },
+            }}
+          >
+            <button
+              className="btn bg-yellow-400 text-white text-xl font-bold"
+              
+            >
+              <GoCodeReview />
+            </button>
+          </Link>
         ) : (
           <button
             disabled

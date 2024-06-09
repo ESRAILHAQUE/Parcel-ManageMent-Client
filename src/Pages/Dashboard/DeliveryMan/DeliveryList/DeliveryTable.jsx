@@ -172,7 +172,7 @@ function DeliveryTable({ index, parcel }) {
         </dialog>
       </td>
       <td>
-        {Status !== "Cancelled" && Status !== "Delivered" &&   Status !== "On the way" ? (
+        {  Status === "On the way" ? (
           <button
             onClick={() => handleCancel(parcel._id)}
             className="btn bg-red-600 text-white text-xl font-bold"

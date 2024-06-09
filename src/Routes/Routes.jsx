@@ -15,6 +15,8 @@ import UserProfile from "../Pages/Dashboard/UserComponents/Profile/UserProfile";
 import AdminRoutes from './AdminRoutes';
 import UpdateParcel from "../Pages/Dashboard/UpdateParcel/UpdateParcel";
 import DeliveryList from "../Pages/Dashboard/DeliveryMan/DeliveryList/DeliveryList";
+import Review from "../Pages/Dashboard/DeliveryMan/Review/Review";
+import ReviewForm from "../Pages/Dashboard/UserDashBoard/ReviewForm/ReviewForm";
 
 export const router = createBrowserRouter([
   {
@@ -60,6 +62,10 @@ export const router = createBrowserRouter([
           fetch(`http://localhost:5000/parcelsId/${params.id}`),
       },
       {
+        path: 'reviewForm',
+        element:<ReviewForm></ReviewForm>
+      },
+      {
         path: "profile",
         element: <UserProfile></UserProfile>,
       },
@@ -71,6 +77,10 @@ export const router = createBrowserRouter([
       {
         path: "deliveryList",
         element: <DeliveryList></DeliveryList>,
+      },
+      {
+        path: 'review',
+        element:<Review></Review>
       },
       // Admin Routes
       {
