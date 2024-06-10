@@ -1,34 +1,36 @@
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { useContext } from "react";
+import { Authcontext } from "../../../Providers/AuthProviders";
 
-function TabularUser({ user, index, refetch }) {
-
+function TabularUser({ user: userData, index, refetch }) {
+  const { user } = useContext(Authcontext)
+ 
+console.log(userData)
     const axiosSecure = useAxiosSecure()
     // console.log(user)
     const handleMakeAdmin = (user) => {
-        axiosSecure.patch(`/users/admin/${user._id}`)
-            .then(res => {
-                if (res.data.modifiedCount > 0) {
-                    refetch();
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: `${user.name} is admin now`,
-                        showConfirmButton: false,
-                        timer: 1500,
-                    });
-                }
-            })
-    }
-    const handleMakeDelivery = user => {
-        axiosSecure.patch(`/users/delivery/${user._id}`)
-            .then((res) => {
+        axiosSecure.patch(`/users/admin/${userData._id}`).then((res) => {
           if (res.data.modifiedCount > 0) {
             refetch();
             Swal.fire({
               position: "top-end",
               icon: "success",
-              title: `${user.name} is Delivey Man now`,
+              title: `${userData.name} is admin now`,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+        });
+    }
+    const handleMakeDelivery = user => {
+        axiosSecure.patch(`/users/delivery/${userData._id}`).then((res) => {
+          if (res.data.modifiedCount > 0) {
+            refetch();
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: `${userData.name} is Delivey Man now`,
               showConfirmButton: false,
               timer: 1500,
             });
@@ -39,15 +41,16 @@ function TabularUser({ user, index, refetch }) {
     return (
       <tr className="hover text-center">
         <th>{index}</th>
-        <td>{user.name}</td>
-        <td>Phone Number</td>
+        <td>{userData.name}</td>
+        <td>{userData?.phoneNumber}</td>
         <td>
-          {user?.role === "DeliveryMan" ? (
+          {userData?.role === "DeliveryMan" ? (
             "Delivery Man"
           ) : (
             <button
+              disabled={userData.email===user.email}
               className="btn bg-blue-400"
-              onClick={() => handleMakeDelivery(user)}
+              onClick={() => handleMakeDelivery(userData)}
             >
               Make Delivery Man
             </button>
@@ -55,7 +58,7 @@ function TabularUser({ user, index, refetch }) {
         </td>
 
         <td>
-          {user?.role === "admin" ? (
+          {userData?.role === "admin" ? (
             "Admin"
           ) : (
             <button

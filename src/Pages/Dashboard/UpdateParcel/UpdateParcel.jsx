@@ -10,8 +10,9 @@ import { useLoaderData, useParams } from "react-router-dom";
 function UpdateParcel() {
   const { user } = useContext(Authcontext);
     const existParcel = useLoaderData();
-    console.log(existParcel);
+    console.log(existParcel.name);
   const { id } = useParams();
+  console.log(id)
 
   const axiosSecure = useAxiosSecure();
 
@@ -47,21 +48,20 @@ function UpdateParcel() {
   const onSubmit = async (data) => {
     const updatingData = {
       ...data,
-      name: user.displayName,
-      email: user.email,
-      bookingDate: new Date().toLocaleDateString("en-CA"),
-      price,
-      Status: "Pending",
+      
+      
     };
+    //  console.log("Updating data:", updatingData);
 
     try {
-      const res = await axiosSecure.put(`/parcels/${id}`, updatingData);
+      const res = await axiosSecure.patch(`/update/${id}`, updatingData);
       if (res.data.modifiedCount > 0) {
         Swal.fire({
           title: "Updated!",
-          text: `${data.parcelType} has been updated`,
+          text: `Data has been updated`,
           icon: "success",
         });
+        reset();
       }
     } catch (error) {
       console.error("Error updating parcel:", error);

@@ -17,6 +17,8 @@ import UpdateParcel from "../Pages/Dashboard/UpdateParcel/UpdateParcel";
 import DeliveryList from "../Pages/Dashboard/DeliveryMan/DeliveryList/DeliveryList";
 import Review from "../Pages/Dashboard/DeliveryMan/Review/Review";
 import ReviewForm from "../Pages/Dashboard/UserDashBoard/ReviewForm/ReviewForm";
+import Payment from "../Pages/Dashboard/Payment/Payment";
+import Coffety from "../Components/Coffeti/Coffety";
 
 export const router = createBrowserRouter([
   {
@@ -64,6 +66,16 @@ export const router = createBrowserRouter([
       {
         path: 'reviewForm',
         element:<ReviewForm></ReviewForm>
+      },
+      {
+        path: 'coffety',
+        element: <Coffety></Coffety>
+      },
+      {
+        path: 'payment/:id',
+        element: <Payment></Payment>,
+           loader: ({ params }) =>
+          fetch(`http://localhost:5000/payment/${params.id}`),
       },
       {
         path: "profile",

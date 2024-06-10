@@ -12,6 +12,7 @@ function ParcelBooking() {
   const axiosPublic = useAxiosPublic();
   const { data: DBusers = [], refetch } = useQuery({
     queryKey: ["DBusers"],
+    enabled: !!user?.email,
     queryFn: async () => {
       const res = await axiosSecure.get(`allUsers/${user.email}`);
       //  console.log(res.data);
@@ -125,6 +126,7 @@ function ParcelBooking() {
                     type="text"
                     placeholder="Phone Number"
                     className="input input-bordered"
+                  value={DBusers?.phoneNumber}
                     {...register("phoneNumber", { required: true })}
                   />
                   {errors.phoneNumber && <span>This field is required</span>}

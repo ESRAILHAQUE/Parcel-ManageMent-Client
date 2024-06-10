@@ -3,8 +3,8 @@
 Welcome to the Parcel Management System, a comprehensive solution for managing parcels efficiently using the MERN (MongoDB, Express, React, Node.js) stack. This system helps streamline the process of parcel booking, delivery tracking, and user management.
 
 ## Admin Credentials
-Email: dipta@gmail.com
-Password: Esrail
+Email:  dipta@gmail.com
+Password:  Esrail
 
 ## Live Site URL
 [Parcel Management System](https://parcel-944a6.web.app)

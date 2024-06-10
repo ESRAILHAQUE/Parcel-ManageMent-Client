@@ -8,13 +8,13 @@ import { IoLocation } from "react-icons/io5";
 import { ImCross } from "react-icons/im";
 import GoogleMap from "../../../../Components/GoogleMap/GoogleMap";
 
-function DeliveryTable({ index, parcel }) {
+function DeliveryTable({ index, parcel ,refetch}) {
   const { name,receiverName, phoneNumber,ApproximateDeliveryDate
 , price, bookingDate,receiverPhoneNumber,deliveryAddress, Status, deliveryDate, _id } =
     parcel;
   const axiosSecure = useAxiosSecure();
 
-  const { data: delivery = [], refetch } = useQuery({
+  const { data: delivery = [],  } = useQuery({
     queryKey: ["deliveryMan"],
     queryFn: async () => {
       const res = await axiosSecure.get("/user/role?role=DeliveryMan");

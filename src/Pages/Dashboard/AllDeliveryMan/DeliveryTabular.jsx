@@ -3,7 +3,7 @@ function DeliveryTabular({index,delivery,refetch}) {
     <tr className="hover">
       <th>{index}</th>
       <td>{delivery.name}</td>
-      <td>Phone Number</td>
+      <td>{ delivery.phoneNumber}</td>
       <td>Number of parcel delivered</td>
 
       <td>Average review</td>

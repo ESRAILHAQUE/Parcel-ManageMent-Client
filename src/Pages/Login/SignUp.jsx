@@ -50,7 +50,7 @@ function SignUp() {
        'Content-Type':'multipart/form-data'
      }
     })
-    console.log(res.data)
+    
     const image = res.data.data.display_url;
 ;
     const userInfo = {
@@ -58,6 +58,7 @@ function SignUp() {
       email: data.email,
       role: data.role,
       image: image,
+      phoneNumber:data.phoneNumber
     }
     createUser(data.email, data.password)
       .then(() => {
@@ -156,19 +157,41 @@ function SignUp() {
                   <span className="label-text">Upload Image</span>
                 </label>
                 <input
-                  {...register('image',{required:true})}
+                  {...register("image", { required: true })}
                   type="file"
                   className="file-input file-input-bordered w-full max-w-xs"
                 />
               </div>
               <div className="form-control">
-                <select defaultValue='default' {...register('role',{required:true})} className="select select-bordered w-full max-w-xs">
-                  <option disabled value='default'>
+                <select
+                  defaultValue="default"
+                  {...register("role", { required: true })}
+                  className="select select-bordered w-full max-w-xs"
+                >
+                  <option disabled value="default">
                     Register Type
                   </option>
-                  <option value={'user'}>User</option>
-                  <option value={'DeliveryMan'}>Delivery Man</option>
+                  <option value={"user"}>User</option>
+                  <option value={"DeliveryMan"}>Delivery Man</option>
                 </select>
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Phone Number</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="phone Number"
+                  className={`input input-bordered ${
+                    errors.name ? "input-error" : ""
+                  }`}
+                  {...register("phoneNumber", {
+                    required: "phoneNumber is required",
+                  })}
+                />
+                {errors.name && (
+                  <span className="text-error">{errors.name.message}</span>
+                )}
               </div>
               <div className="form-control">
                 <label className="label">

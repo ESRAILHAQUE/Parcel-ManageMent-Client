@@ -29,6 +29,10 @@ const Features = ({ stats }) => {
        return res.data;
      },
    });
+  const deliveredParcels = parcel.filter(
+    (parcel) => parcel.Status === "Delivered"
+  );
+//  console.log(deliveredParcels)
   return (
     <div className="features my-10 mx-6">
       <div className="text-center my-5">
@@ -90,7 +94,7 @@ const Features = ({ stats }) => {
               <TbTruckDelivery className="text-4xl" />
               <CountUp
                 className="text-4xl font-extrabold text-blue-600"
-                end={"30"}
+                end={deliveredParcels.length}
                 duration={2}
               />
             </div>
